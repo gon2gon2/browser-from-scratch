@@ -1,15 +1,21 @@
-class HeaderBuilder:
-    __line_break = "\r\n"
-    __header = ""
+from constants import LINE_BREAK
 
+
+class HeaderBuilder:
     def __init__(self, host):
-        self.__headers["Host"] = host
+        self.__header = {}
+
+        self._add_header("Host", host)
 
     def user_agent(self, v):
         self._add_header("User-Agent", v)
 
     def build(self):
-        return self.__header + self.__line_break
+        header = ""
+        for k, v in self.__header.items():
+            header += f"{k}: {v}{LINE_BREAK}"
+
+        return header + LINE_BREAK
 
     def _add_header(self, h, v):
-        self.__headers[h] = v
+        self.__header[h] = v
