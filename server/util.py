@@ -11,3 +11,15 @@ def show(body):
 def load(url):
     body = url.request()
     show(body)
+
+    
+
+        
+def build_header(headers, close):
+    header_string = ""
+    for k,v in headers.items():
+        header_string += f"{k}: {v}"
+        header_string += close
+        
+    header_string += close
+    return header_string

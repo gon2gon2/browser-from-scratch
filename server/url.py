@@ -1,6 +1,9 @@
 import socket
 import ssl
 
+from constants import LINE_BREAK
+from util import build_header
+
 class URL:
     def __init__(self, url):
         self.scheme, url = url.split("://", 1)
@@ -38,9 +41,12 @@ class URL:
         
         s.connect((self.host, self.port))
 
-        request = f"GET {self.path} HTTP/1.0\r\n"
-        request += f"Host: {self.host}\r\n"
-        request += "\r\n"
+        request = f"GET {self.path} HTTP/1.1{LINE_BREAK}"
+        request += build_header(
+            headers = {'Host':self.host},
+            close = LINE_BREAK
+        )
+        
         s.send(request.encode("utf8"))
 
         response = s.makefile("r", encoding="utf8", newline='\r\n')
