@@ -1,1 +1,7 @@
 LINE_BREAK = "\r\n"
+HTTP_SCHEME = "http"
+HTTPS_SCHEME = "https"
+FILE_SCHEME = "file"
+
+HTTP_PORT = 80
+HTTPS_PORT = 443
