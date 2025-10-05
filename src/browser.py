@@ -3,6 +3,7 @@ import tkinter as tk
 
 WIDTH, HEIGHT = 800, 600
 HSTEP, VSTEP = 13, 18
+SCROLL_STEP = 100
 
 
 class Browser:
@@ -11,6 +12,11 @@ class Browser:
         self.canvas = tk.Canvas(self.window, width=WIDTH, height=HEIGHT)
         self.canvas.pack()
 
+        # scroll
+        self.scroll = 0
+        self.window.bind("<Down>", self.scroll_down)
+        self.window.bind("<Up>", self.scroll_up)
+
     def load(self, url):
         body = url.request()
         text = lex(body)
@@ -18,8 +24,25 @@ class Browser:
         self.draw()
 
     def draw(self):
+        self.canvas.delete("all")
         for x, y, c in self.display_list:
-            self.canvas.create_text(x, y, text=c)
+
+            if y > self.scroll + HEIGHT:
+                continue
+            if y + VSTEP < self.scroll:
+                continue
+
+            self.canvas.create_text(x, y - self.scroll, text=c)
+
+    def scroll_down(self, event):
+        self.scroll += SCROLL_STEP
+        print(self.scroll)
+        self.draw()
+
+    def scroll_up(self, event):
+        self.scroll -= SCROLL_STEP
+        print(self.scroll)
+        self.draw()
 
 
 def lex(body):
