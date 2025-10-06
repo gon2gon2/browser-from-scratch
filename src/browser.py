@@ -1,4 +1,5 @@
 import tkinter as tk
+import tkinter.font as font
 
 
 WIDTH, HEIGHT = 800, 600
@@ -36,13 +37,17 @@ class Browser:
 
     def scroll_down(self, event):
         self.scroll += SCROLL_STEP
-        print(self.scroll)
         self.draw()
 
     def scroll_up(self, event):
         self.scroll -= SCROLL_STEP
-        print(self.scroll)
         self.draw()
+
+    def show_font(self):
+        bi_times = font.Font(family="Times", size=16, weight="bold", slant="italic")
+
+        TEXT = "Hello!"
+        self.canvas.create_text(200, 100, text=TEXT, font=bi_times)
 
 
 def lex(body):
